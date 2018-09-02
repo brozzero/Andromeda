@@ -15,8 +15,6 @@ public:
     explicit Controller(Model* m);
     void avanti();
     void indietro();
-    void play(){};
-    void stop(){};
 
 };
 

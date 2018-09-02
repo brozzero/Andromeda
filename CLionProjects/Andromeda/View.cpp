@@ -47,14 +47,19 @@ View::View(Model* model,Controller* c, wxWindow* parent, wxWindowID id, const wx
 
     this->SetSizer( View_sizer );
     this->Layout();
+    timer.SetOwner( this, wxID_ANY );
+    timer.Start( 5000 );
 
     this->Centre( wxBOTH );
+
+
 
     // Connect Events
     back_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( View::onPreviousButtonClick), NULL, this );
     play_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( View::OnPlayButtonClick) , NULL, this );
     stop_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( View::OnPauseButtonClick), NULL, this );
     next_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( View::OnNextButtonClick), NULL, this );
+    this->Connect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( View::OnNextButtonClick ) );
 }
 
 View::~View()
@@ -64,25 +69,30 @@ View::~View()
     play_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( View::OnPlayButtonClick ), NULL, this );
     stop_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( View::OnPauseButtonClick ), NULL, this );
     next_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( View::OnNextButtonClick ), NULL, this );
+    this->Disconnect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( View::OnNextButtonClick ) );
     model->unsubscribe(this);
 }
 
 void View::onPreviousButtonClick(wxCommandEvent &event) {
     controller->indietro();
+    timer.Start(5000);
 
 }
 
 void View::OnPlayButtonClick(wxCommandEvent &event) {
-    controller->play();
+
+    timer.Start(5000);
 
 }
 
 void View::OnPauseButtonClick(wxCommandEvent &event) {
-    controller->stop();
+
+    timer.Stop();
 }
 
 void View::OnNextButtonClick(wxCommandEvent &event) {
     controller->avanti();
+    timer.Start(5000);
 
 }
 
@@ -90,6 +100,11 @@ void View::update() {
 int value = model->getCont();
     wxString wxIntString= wxString::Format(wxT("%i/%i"),value,model->getSize());
     Counter->ChangeValue(wxIntString);
+
+}
+
+void View::OnNextButtonClick(wxTimerEvent &event) {
+    controller->avanti();
 
 }
 

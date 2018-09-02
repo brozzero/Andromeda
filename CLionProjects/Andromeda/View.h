@@ -5,7 +5,7 @@
 #ifndef ANDROMEDA_VIEW_H
 #define ANDROMEDA_VIEW_H
 
-
+#include <wx/timer.h>
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/bitmap.h>
@@ -41,12 +41,15 @@ protected:
     wxButton* play_button;
     wxButton* stop_button;
     wxButton* next_button;
+    wxTimer timer;
+
 
     // Virtual event handlers, overide them in your derived class
     virtual void onPreviousButtonClick( wxCommandEvent& event ) ;
     virtual void OnPlayButtonClick( wxCommandEvent& event ) ;
     virtual void OnPauseButtonClick( wxCommandEvent& event );
     virtual void OnNextButtonClick( wxCommandEvent& event );
+    virtual void OnNextButtonClick( wxTimerEvent& event );
     virtual void update();
 
 

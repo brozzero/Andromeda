@@ -8,23 +8,32 @@
 
 #include <vector>
 #include <list>
+#include <wx/chartype.h>
+#include <wx/memory.h>
 #include "Subject.h"
 #include "Image.h"
 
 class Model:public Subject {
 private:
     //container di immagini
-    std::vector<Image*> playlist;
+    std::vector<wxString> playlist;
     int size, cont;
     std::list<Observer*> observers;
+    wxString directory;
+public:
+    const wxString &getDirectory() const;
+
+    void setDirectory( wxString &directory);
 
 
 public:
-    Model(const std::vector<Image *> &playlist);
+    Model();
 
     int getSize() const;
 
     int getCont() const;
+
+    std::vector<wxString>* getPlaylist() ;
 
     void setCont(int cont);
 
@@ -33,6 +42,8 @@ public:
     virtual void  unsubscribe(Observer* observer);
 
     virtual ~Model();
+
+    void setSize(int size);
 
 
 };

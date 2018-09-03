@@ -4,7 +4,7 @@
 
 #include "Model.h"
 
-Model::Model(const std::vector<Image *> &playlist) : playlist(playlist) {
+Model::Model() {
     size= playlist.size();
     cont=0;
 }
@@ -12,6 +12,10 @@ Model::Model(const std::vector<Image *> &playlist) : playlist(playlist) {
 int Model::getSize() const {
 
     return size;
+}
+
+void Model::setSize(int size) {
+    Model::size = size;
 }
 
 int Model::getCont() const {
@@ -24,6 +28,8 @@ void Model::setCont(int cont) {
 }
 
 void Model::notify() {
+
+
     for (auto observer:observers){
         observer->update();
     }
@@ -41,14 +47,23 @@ void Model::unsubscribe(Observer *observer) {
 }
 
 Model::~Model() {
-
-    for (auto img:playlist){
-        delete[] img;
-    }
     playlist.clear();
     for (auto o:observers){
         delete[] o;
     }
     observers.clear();
 
+}
+
+  std::vector<wxString>* Model::getPlaylist()  {
+    return &playlist;
+}
+
+const wxString &Model::getDirectory() const {
+    return directory;
+}
+
+void Model::setDirectory( wxString &directory) {
+    Model::directory = directory;
+    notify();
 }

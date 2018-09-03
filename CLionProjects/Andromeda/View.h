@@ -31,7 +31,7 @@ class View : public wxFrame, public Observer
 private:
     Controller* controller;
     Model* model;
-
+    wxBoxSizer* View_sizer;
 
 protected:
     wxStaticBitmap* Image;
@@ -42,6 +42,7 @@ protected:
     wxButton* stop_button;
     wxButton* next_button;
     wxTimer timer;
+
 
 
     // Virtual event handlers, overide them in your derived class
@@ -55,7 +56,7 @@ protected:
 
 public:
 
-    View(Model* model ,Controller* c, wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+    View(Model* model ,Controller* c, wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 495,364 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
     ~View();
 

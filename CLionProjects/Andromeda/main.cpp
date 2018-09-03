@@ -6,6 +6,7 @@
 #endif
 
 #include "View.h"
+#include "Preview.h"
 
 class MyApp: public wxApp{
 public:
@@ -17,17 +18,15 @@ public:
 wxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit() {
-    Image* img1=new Image(24,"test1");
-    Image* img2=new Image(25,"test2");
-    std::vector <Image*> test;
-    test.push_back(img1);
-    test.push_back(img2);
-    std::cout<<test.size()<<std::endl;
+    Model* model= new Model();
 
 
-    Model* model= new Model(test);
+
+
     auto controller=new Controller(model);
     auto view=new View (model,controller,NULL);
     view->Show(true);
+    Preview* preview=new Preview(model,NULL);
+    preview->Show(true);
     return true;
 }

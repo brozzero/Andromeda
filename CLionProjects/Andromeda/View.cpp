@@ -9,7 +9,6 @@ View::View(Model* model,Controller* c, wxWindow* parent, wxWindowID id, const wx
     model->subscribe(this);
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-    wxBoxSizer* View_sizer;
     View_sizer = new wxBoxSizer( wxVERTICAL );
 
     Image = new wxStaticBitmap( this, wxID_ANY, wxBitmap( wxT("/home/manuel/Scaricati/index.jpeg"), wxBITMAP_TYPE_ANY ), wxPoint( -1,-1 ), wxDefaultSize, 0 );
@@ -42,13 +41,12 @@ View::View(Model* model,Controller* c, wxWindow* parent, wxWindowID id, const wx
     Button_panel->SetSizer( Button_sizer );
     Button_panel->Layout();
     Button_sizer->Fit( Button_panel );
-    View_sizer->Add( Button_panel, 1, wxEXPAND | wxALL, 5 );
+    View_sizer->Add( Button_panel, 0,wxBOTTOM|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
     this->SetSizer( View_sizer );
     this->Layout();
     timer.SetOwner( this, wxID_ANY );
-    timer.Start( 5000 );
 
     this->Centre( wxBOTH );
 
@@ -80,7 +78,7 @@ void View::onPreviousButtonClick(wxCommandEvent &event) {
 }
 
 void View::OnPlayButtonClick(wxCommandEvent &event) {
-
+    controller->avanti();
     timer.Start(5000);
 
 }
@@ -100,6 +98,16 @@ void View::update() {
 int value = model->getCont();
     wxString wxIntString= wxString::Format(wxT("%i/%i"),value,model->getSize());
     Counter->ChangeValue(wxIntString);
+    if(model->getSize()) {
+        delete Image;
+
+
+        Image = new wxStaticBitmap(this, wxID_ANY, wxBitmap((wxT("%i"), model->getDirectory()), wxBITMAP_TYPE_ANY),
+                                   wxPoint(-1, -1), wxDefaultSize, 0);
+        Image->SetMaxSize(wxSize(-1, 300));
+        View_sizer->Add( Image, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 5 );
+
+    }
 
 }
 

@@ -11,15 +11,20 @@ void Controller::avanti() {
     if(counter!=model->getSize()){
         counter++;
         model->setCont(counter);
-
+        auto playlist=model->getPlaylist();
+        model->setDirectory(playlist->operator[](counter-1));
     }
+
+
 }
 
 void Controller::indietro() {
     int counter=model->getCont();
-    if(counter!=0){
+    if(counter!=1){
         counter--;
         model->setCont(counter);
+        auto playlist=model->getPlaylist();
+        model->setDirectory(playlist->operator[](counter-1));
 
     }
 }
